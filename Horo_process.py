@@ -132,3 +132,28 @@ def tail_selection(head, trigram_list):
     prob_list = creation_of_tail_or_prob_list(temp, 1)
     tail = random.choices(tail_list, weights=prob_list)
     return tail[0]
+
+
+def text_generator(token_list, number_of_lines=10, mode=3):
+    all_head_list = bigram_division(token_list)
+    trigram_list = trigram_division(token_list)
+    capital_head_list = only_capital_head(all_head_list)
+    head = random.choice(capital_head_list)
+    output_list = head.split()
+    for i in range(number_of_lines):
+        while True:
+            reserved_head = head
+            tail = tail_selection(head, trigram_list)
+            if not output_list: # or len(output_list) >= 12:
+                while True:
+                    if tail[-1] in ['.', '?', '!']:
+                        tail = tail_selection(reserved_head, trigram_list)
+                    else:
+                        break
+            output_list.append(tail)
+            head = head.split()[1] + ' ' + tail
+            last_char = head[-1]
+            if len(output_list) >= 5 and last_char in ['.', '?', '!']:
+                text_saver(' '.join(output_list), 'test_horoscope', sep='\n\n')
+                output_list = []
+                break
