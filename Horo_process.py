@@ -123,3 +123,12 @@ def creation_of_tail_or_prob_list(prob_list_of_tails, n=0):  # by default list o
         # print(pair)
         out_list.append(pair[n])
     return out_list
+
+
+def tail_selection(head, trigram_list):
+    temp = creation_of_prob_tail_list_3(head, trigram_list)
+    # print(temp)
+    tail_list = creation_of_tail_or_prob_list(temp, 0)
+    prob_list = creation_of_tail_or_prob_list(temp, 1)
+    tail = random.choices(tail_list, weights=prob_list)
+    return tail[0]
