@@ -157,3 +157,15 @@ def text_generator(token_list, number_of_lines=10, mode=3):
                 text_saver(' '.join(output_list), 'test_horoscope', sep='\n\n')
                 output_list = []
                 break
+
+
+def main():
+    token_list = token_division('corpus.txt')
+    token_list.extend(token_division('aneki.txt', r'[^\d\s]+'))
+    text_generator(token_list)
+    text_saver('\n', 'test_horoscope')
+    pass
+
+
+if __name__ == '__main__':
+    main()
